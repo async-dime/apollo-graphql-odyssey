@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 
 const resolvers = {
   Query: {
@@ -12,20 +12,14 @@ const resolvers = {
       // Our tracksForHome resolver will return the results from that TrackAPI method.
       return dataSources.trackAPI.getTracksForHome();
     },
-    tracksForHomeFetch: async () => {
-      const baseUrl = 'https://odyssey-lift-off-rest-api.herokuapp.com';
-      const res = await fetch(`${baseUrl}/tracks`);
-      return res.json();
-    },
+    // tracksForHomeFetch: async () => {
+    //   const baseUrl = 'https://odyssey-lift-off-rest-api.herokuapp.com';
+    //   const res = await fetch(`${baseUrl}/tracks`);
+    //   return res.json();
+    // },
   },
   // Create a resolver function for the Track.author field.
   Track: {
-    // using fetch instead of dataSources
-    author: async ({ authorId }, _, { dataSources }) => {
-      const baseUrl = 'https://odyssey-lift-off-rest-api.herokuapp.com';
-      const res = await fetch(`${baseUrl}/author/${authorId}`);
-      return res.json();
-    },
     // author: (parent, args, context, info) => {},
     // We need the parent argument so let's keep it in the resolver function.
     // We can replace args with an underscore.
@@ -33,10 +27,17 @@ const resolvers = {
     // And then omit info parameter (4th parameter) because we don't need it.
     // We only need authorId so let's to destructure it from parent argument.
 
-    // author: ({ authorId }, _, { dataSources }) => {
+    author: ({ authorId }, _, { dataSources }) => {
     // Use the dataSources object to access the trackAPI.getAuthor() method.
     // It takes a authorId argument from the parent and returns the results.
-    // return dataSources.trackAPI.getAuthor(authorId);
+    return dataSources.trackAPI.getAuthor(authorId);
+    },
+
+    // using fetch instead of dataSources
+    //  author: async ({ authorId }, _, { dataSources }) => {
+    //   const baseUrl = 'https://odyssey-lift-off-rest-api.herokuapp.com';
+    //   const res = await fetch(`${baseUrl}/author/${authorId}`);
+    //   return res.json();
     // },
   },
 };
