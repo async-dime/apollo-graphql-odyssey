@@ -7,12 +7,15 @@ class TrackAPI extends RESTDataSource {
     this.baseURL = 'https://odyssey-lift-off-rest-api.herokuapp.com/';
   }
 
+  // 'get' method is provided by RESTDataSource because we extend our TrackAPI class from that
   getTracksForHome() {
     return this.get('tracks');
   }
-
   getAuthor(authorId) {
     return this.get(`author/${authorId}`);
+  }
+  getTrack(trackId) {
+    return this.get(`track/${trackId}`);
   }
 }
 
