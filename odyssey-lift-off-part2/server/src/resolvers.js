@@ -12,6 +12,7 @@ const resolvers = {
       // Our tracksForHome resolver will return the results from that TrackAPI method.
       return dataSources.trackAPI.getTracksForHome();
     },
+    // using fetch method
     // tracksForHomeFetch: async () => {
     //   const baseUrl = 'https://odyssey-lift-off-rest-api.herokuapp.com';
     //   const res = await fetch(`${baseUrl}/tracks`);
@@ -21,12 +22,11 @@ const resolvers = {
   // Create a resolver function for the Track.author field.
   Track: {
     // author: (parent, args, context, info) => {},
-    // We need the parent argument so let's keep it in the resolver function.
+    // We need the parent parameter so let's keep it in the resolver function.
     // We can replace args with an underscore.
     // We destructure context to access the dataSources key for our TrackAPI.
     // And then omit info parameter (4th parameter) because we don't need it.
-    // We only need authorId so let's to destructure it from parent argument.
-
+    // We only need authorId so let's to destructure it from parent parameter.
     author: ({ authorId }, _, { dataSources }) => {
     // Use the dataSources object to access the trackAPI.getAuthor() method.
     // It takes a authorId argument from the parent and returns the results.
