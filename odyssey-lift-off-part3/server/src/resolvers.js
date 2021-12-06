@@ -10,16 +10,14 @@ const resolvers = {
     // We need id of track so let's destructure it from args parameter.
     // We need access to dataSources key so let's destructure it from context parameter.
     track: (_, { id }, { dataSources }) => {
-    ```js
     // example of getTrackModules call in the track resolver
     // get track details
-    const track = dataSources.trackAPI.getTrack(id);
+    // const track = dataSources.trackAPI.getTrack(id);
     // get module details for the track
-    const modules = await dataSources.trackAPI.getTrackModules(id);
+    // const modules = await dataSources.trackAPI.getTrackModules(id);
     // shape the data in the way that the schema expects it
-    return {...track, modules};
+    // return {...track, modules};
     // however this do unnecessary calls when query don't ask for author data
-    ```
       return dataSources.trackAPI.getTrack(id);
     },
   },
