@@ -15,6 +15,23 @@ const resolvers = {
       return dataSources.trackAPI.getModule(id);
     },
   },
+
+  Mutation: {
+    // increment a track's numberOfViews property
+    incrementTrackViews: async (_, { id }, { dataSources }) => {
+      // we need `code`, `success`, and `message` as a response so we async the function call and put it a `track` variable
+      const track = await dataSources.trackAPI.incrementTrackViews(id);
+
+      // let's assume it was a successful (200) response, will handle error later
+      return {
+        code: 200,
+        success: true,
+        message: `Successfully incremented track ${id}'s number of views`,
+        track,
+      };
+    },
+  },
+
   Track: {
     author: ({ authorId }, _, { dataSources }) => {
       return dataSources.trackAPI.getAuthor(authorId);
