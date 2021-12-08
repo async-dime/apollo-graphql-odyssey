@@ -10,6 +10,22 @@ const typeDefs = gql`
     module(id: ID!): Module!
   }
 
+  type Mutation {
+    incrementTrackViews(id: ID!): incrementTrackViewsResponse!
+  }
+
+  "A specific type for the response of the incrementTrackViews mutation"
+  type incrementTrackViewsResponse {
+    "Similar to HTTP status code, represents the status of the mutation"
+    code: Int!
+    "Indicates whether the mutation was successful"
+    status: Boolean!
+    "A message to display to the user, in case the status code is can't fully describes the status of the mutation"
+    message: String!
+    "Newly updated track"
+    track: Track
+  }
+
   "A track is a group of Modules that teaches about a specific topic"
   type Track {
     id: ID!
