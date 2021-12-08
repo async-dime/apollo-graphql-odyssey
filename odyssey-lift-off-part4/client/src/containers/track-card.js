@@ -3,6 +3,25 @@ import styled from '@emotion/styled';
 import { colors, mq } from '../styles';
 import { humanReadableTimeFromSeconds } from '../utils/helpers';
 import { Link } from '@reach/router';
+import { gql, useMutation } from '@apollo/client';
+
+/**
+ * Mutation to increment track's number of views
+ * (exported for tests)
+ */
+export const INCREMENT_TRACK_VIEWS = gql`
+  mutation IncrementTrackViewsMutation($incrementTrackViewsId: ID!) {
+    incrementTrackViews(id: $incrementTrackViewsId) {
+      code
+      success
+      message
+      track {
+        id
+        numberOfViews
+      }
+    }
+  }
+`;
 
 /**
  * Track Card component renders basic info in a card format
@@ -11,8 +30,27 @@ import { Link } from '@reach/router';
 const TrackCard = ({ track }) => {
   const { title, thumbnail, author, length, modulesCount, id } = track;
 
+  /**
+   * const [mutateFunction, {loading, error, data}] = useMutation(GRAPHQL_OPERATION, {
+   *    variables: {var1: id}
+   * });
+   * Now, here's a twist: unlike with useQuery, calling useMutation doesn't actually execute the mutation automatically!
+   * Instead, the useMutation hook returns an array with two elements, which we'll start to destructure here.
+   * The first element is the mutate function we'll use to actually run the mutation later on. We'll call it incrementTrackViews.
+   * The second element is an object with information about the mutation: loading, error and data. This component doesn't need for now.
+   * This hook takes a GraphQL operation as the first parameter
+   * It also takes in an options object as the second parameter, where properties like variables are set.
+   */
+  const [incrementTrackViews] = useMutation(INCREMENT_TRACK_VIEWS, {
+    variables: { incrementTrackViewsId: id },
+    // to observe what the mutation response returns
+    onCompleted: (data) => {
+      console.log(data);
+    },
+  });
+
   return (
-    <CardContainer to={`/track/${id}`}>
+    <CardContainer to={`/track/${id}`} onClick={incrementTrackViews}>
       <CardContent>
         <CardImageContainer>
           <CardImage src={thumbnail} alt={title} />
