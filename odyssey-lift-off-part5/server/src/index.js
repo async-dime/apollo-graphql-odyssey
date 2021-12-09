@@ -5,6 +5,7 @@ const TrackAPI = require('./datasources/track-api');
 
 async function startApolloServer(typeDefs, resolvers) {
   const server = new ApolloServer({
+    cors: true,
     typeDefs,
     resolvers,
     dataSources: () => {
